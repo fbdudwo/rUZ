@@ -1,4 +1,14 @@
 {
+  "name": "rUZ",
+  "version": "1.0.0",
+  "description": "Lyric-based music recommender",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.9.0",
     "cors": "^2.8.5",

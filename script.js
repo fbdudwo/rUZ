@@ -10,7 +10,7 @@ window.onload = function () {
   const imgElem = document.getElementById("cover");
 
   async function getAccessToken() {
-    const res = await fetch("http://localhost:3000/token");
+    const res = await fetch("https://ruz-kubt.onrender.com/token");
     const data = await res.json();
     return data.token;
   }

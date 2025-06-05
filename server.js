@@ -1,30 +1,35 @@
 const express = require("express");
 const axios = require("axios");
-const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const port = 3000;
 
+const app = express();
 app.use(cors());
 
 app.get("/token", async (req, res) => {
   try {
-    const result = await axios.post(
+    const response = await axios.post(
       "https://accounts.spotify.com/api/token",
-      "grant_type=client_credentials",
+      new URLSearchParams({
+        grant_type: "client_credentials"
+      }),
       {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
           Authorization:
             "Basic " +
-            Buffer.from(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET).toString("base64"),
-        },
+            Buffer.from(
+              process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
+            ).toString("base64"),
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
       }
     );
-    res.json({ token: result.data.access_token });
+    res.json({ token: response.data.access_token });
   } catch (error) {
+    console.error("Token fetch error:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to get token" });
   }
 });
 
-app.listen(port, () => console.log(`✅ Server running at http://localhost:${port}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
